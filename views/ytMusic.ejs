@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&family=Raleway:wght@300&family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>YouTube Music Downloader || ATO</title>
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body>
+    <section>
+        <h1 id="vidTitle"></h1>
+        <div class="video-preview-link">
+
+            <div class="vid-container">
+                <img id="ThumbURL" src="">
+                <div class="video-info-container">
+                    <h2 id="channelName"></h2>
+                    <div class="video-info-per">
+                        <h2 id="vidLength"></h2>
+                        <h2 id="vidViews"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="link-container" id="formLoc">
+                <select id="selectQuality">
+                    <h1>
+                        Quality
+
+                    </h1>
+
+                    <% info.forEach((format)=> { %>
+                    <% if(format.itag == 258) { %>
+                        <option style="width: 100%;" type="submit" value="<%= format.url %>">
+                            <%= format.hasAudio? "mp3 320kbps" : "" ;%>
+                        </option>
+                        <% } else if(format.itag == 141) { %>
+                        <option style="width: 100%;" type="submit" value="<%= format.url %>">
+                            <%= format.hasAudio? "mp3 256kbps" : "" ;%>
+                        </option>
+                        <% } else if(format.itag == 256) { %>
+                        <option style="width: 100%;" type="submit" value="<%= format.url %>">
+                            <%= format.hasAudio? "mp3 160kbps" : "" ;%>
+                        </option>
+                        <% }else if(format.itag == 140) { %>
+                        <option selected style="width: 100%;" type="submit" value="<%= format.url %>">
+                            <%= format.hasAudio? "mp3 128kbps" : "" ;%>
+                        </option>
+                        <% } else if(format.itag == 251) { %>
+                        <option style="width: 100%;" type="submit" value="<%= format.url %>">
+                            <%= format.hasAudio? "mp3 96kbps" : "" ;%>
+                        </option>
+                        <% } else if(format.itag == 250) { %>
+                        <option style="width: 100%;" type="submit" value="<%= format.url %>">
+                            <%= format.hasAudio? "mp3 64kbps" : "" ;%>
+                        </option>
+                        <% } else if(format.itag == 249) { %>
+                        <option style="width: 100%;" type="submit" value="<%= format.url %>">
+                            <%= format.hasAudio? "mp3 48kbps" : "" ;%>
+                        </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        <button onclick="history.back()" type="button">Download Next...</button>
+    </section>
+
+    <script>
+
+
+        // Embed code
+        const vidId = "<%= videoID %>";
+        const iframeUrl = document.getElementById("ThumbURL");
+        iframeUrl.src = `https://i.ytimg.com/vi/${vidId}/hqdefault.jpg`;
+        
+
+        // channel Name
+        const channelName = document.getElementById("channelName");
+        channelName.innerHTML = `<i style="color : red;" class="fab fa-youtube"></i> ` + "<%= infoDetail.ownerChannelName %>"
+
+        // Video Tittle
+        const vidTitle = document.getElementById("vidTitle");
+        vidTitle.innerText = "<%= infoDetail.title %>"
+
+        // Video Length
+        const vidLength = document.getElementById("vidLength");
+        var vidLength_temp = "<%= infoDetail.lengthSeconds %>";
+
+        var vidLength_min, vidLength_sec, vidLength_hour;
+
+        vidLength_min = Math.floor(vidLength_temp / 60);
+        
+        if(vidLength_min > 59){
+            vidLength_hour = Math.floor(vidLength_min/60);
+            vidLength_min = vidLength_min%60;
+            if(vidLength_min < 10){
+                vidLength_min = "0" + vidLength_min;
+            }
+        }else{
+            vidLength_hour = "00";
+            if(vidLength_min < 10){
+                vidLength_min = "0" + vidLength_min;
+            }
+        }
+
+        vidLength_sec = vidLength_temp % 60;
+
+        if (vidLength_sec < 10) {
+            vidLength_sec = "0" + vidLength_sec;
+        }
+
+        vidLength.innerHTML = ` <i class="fas fa-video"></i> ` + vidLength_hour + " : " + vidLength_min + " : " + vidLength_sec;
+
+        // Video Views
+        var vidViews = document.getElementById("vidViews");
+        
+        var vidViewTemp = "<%= infoDetail.viewCount %>";
+        if(vidViewTemp > 999 && vidViewTemp < 1000000){
+            vidViewTemp = Math.floor(vidViewTemp/1000) + "k";
+        }else if(vidViewTemp > 999999 && vidViewTemp < 100000000){
+            vidViewTemp = Math.floor(vidViewTemp/1000000) + "M";
+        }else if(vidViewTemp > 99999999){
+            vidViewTemp = Math.floor(vidViewTemp/100000000) + "B";
+        }
+        vidViews.innerHTML = ` <i class="fas fa-eye"></i>  ` + vidViewTemp;
+
+
+        var select = document.getElementById('selectQuality');
+        var option = select.getElementsByTagName('option');
+        var originalURL = "<%= originalUrl %>";
+        var vidTit = "<%= infoDetail.title %>";
+
+        window.onload = function () {
+            var url = select.options[select.selectedIndex];
+
+            document.getElementById('formLoc').insertAdjacentHTML("beforeend",
+                `<br>
+						<form id="firstform" method="get" action='/start' class="my-5">
+						
+							<h1>Download From Here</h1>
+							<input id="firstform_btnflag" type="text" style="display : none;" class="form-control" name="btnflag" value="${url.text}"/>
+							<input id="firstform_formatTag" type="text" style="display : none;" class="form-control" name="formatTag" value="${url.value}"/>
+							<input id="firstform_input" type="text" style="display : none;" class="form-control" name="originalURL" value="${originalURL}"/>
+							<input id="firstform_input" type="text" style="display : none;" class="form-control" name="vidName" value="${vidTit}"/>
+						
+							<button type="submit" class="btn btn-primary">Download</button>
+					</form>
+					`)
+
+        }
+
+        select.onchange = function () {
+            var url = select.options[select.selectedIndex];
+
+            document.getElementById('firstform_formatTag').value = url.value;
+            document.getElementById('firstform_input').value = originalURL;
+            document.getElementById('firstform_btnflag').value = url.text;
+        }
+    </script>
+</body>
+
+</html>

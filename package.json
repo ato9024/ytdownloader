@@ -1,0 +1,23 @@
+{
+  "name": "smvideodownloader",
+  "version": "1.0.0",
+  "description": "this is a video downloader from social media link",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "video",
+    "downloader"
+  ],
+  "author": "ogt",
+  "start" : "index.js",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "node": "^17.3.0",
+    "path": "^0.12.7",
+    "ytdl-core": "^4.10.0"
+  }
+}
