@@ -4,25 +4,27 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Lobster&family=Poppins:wght@200;300&family=Raleway:wght@300&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<title>Youtube Downloader</title>
-		<link
-			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-			crossorigin="anonymous"
-		/>
+		<link rel="stylesheet" href="./css/main.css">
 	</head>
 	<body>
-		<div class="container my-5">
+		<div class="container">
 			<h1><strong>Youtube Downloader</strong></h1>
-			<form method="get" action='' class="my-5" id="formID">
+			<form method="get" action='' id="formID">
 				<div class="form-group">
 					<label for="videoURL">Video Link from Youtube</label>
 					<input type="text" class="form-control" placeholder="Enter Video URL" name="url"/>
 				</div>
-				<button onclick="ytMusicDownload()" type="submit" id="ytMusic" class="btn btn-primary">Music Download</button>
-				<button onclick="ytVideoDownload()" type="submit" id="ytVideo" class="btn btn-primary">Video Download</button>
-			</form>
+				<div class="button-group">
+					<button onclick="ytMusicDownload()" type="submit" id="ytMusic" class="btn btn-primary">Music Download</button>
+					<button onclick="ytVideoDownload()" type="submit" id="ytVideo" class="btn btn-primary">Video Download</button>
+					<a href="https://alltool.online/ytthumbnail">Thumbnail Download</a>
+				</div>
+				</form>
 		</div>
 	</body>
 	<script>

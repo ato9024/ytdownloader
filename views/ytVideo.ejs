@@ -143,9 +143,9 @@
         if(vidViewTemp > 999 && vidViewTemp < 1000000){
             vidViewTemp = Math.floor(vidViewTemp/1000) + "k";
         }else if(vidViewTemp > 999999 && vidViewTemp < 1000000000){
-            vidViewTemp = Math.floor(vidViewTemp/1000000) + "M";
+            vidViewTemp = (vidViewTemp/1000000).toFixed(1) + "M";
         }else if(vidViewTemp > 999999999){
-            vidViewTemp = Math.floor(vidViewTemp/100000000) + "B";
+            vidViewTemp = (vidViewTemp/1000000000).toFixed(1) + "B";
         }
         vidViews.innerHTML = ` <i class="fas fa-eye"></i>  ` + vidViewTemp;
 

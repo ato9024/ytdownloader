@@ -35,7 +35,7 @@ app.get('/ytMusic', async (req, res) => {
             infoDetail : info.videoDetails,
         });
     }else if(VideoURL.indexOf("https://youtu.be/") != -1){
-        const v_id = VideoURL.split('v=')[1];
+        const v_id = VideoURL.split('be/')[1];
         const info = await ytdl.getInfo(req.query.url);
         return res.render("ytMusic", {
             originalUrl : VideoURL,
@@ -63,7 +63,7 @@ app.get('/ytVideo', async (req, res) => {
             infoDetail : info.videoDetails,
         });
     }else if(VideoURL.indexOf("https://youtu.be/") != -1){
-        const v_id = VideoURL.split('v=')[1];
+        const v_id = VideoURL.split('be/')[1];
         const info = await ytdl.getInfo(req.query.url);
         return res.render("ytVideo", {
             originalUrl : VideoURL,
