@@ -4,7 +4,7 @@ var ytdl = require("ytdl-core");
 var path = require("path");
 var url = require('url');
 var ejs = require('ejs');
-var port = process.env.port || 3000;
+var port = process.env.PORT || 3000;
 
 // Built in middleware
 const staticPath = path.join(__dirname, "/public")
@@ -18,9 +18,7 @@ app.get("/", (req, res) => {
     return res.render("index");
 });
 
-app.get("*", (req, res) => {
-    res.render("404page");
-})
+
 // Create a \download Route 
 // Create a route that will pass the parameter url to download view.
 // YT Music Downloader
@@ -97,7 +95,9 @@ app.get('/start', async (req, res) => {
     ytdl(originalurl, {filter: format => format.itag == iTag}).pipe(res);
 });
 
-
+app.get("*", (req, res) => {
+    res.render("404page");
+})
     
 // OUR ROUTES WILL GO HERE
 app.listen(port, () => {
