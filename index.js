@@ -25,23 +25,27 @@ app.get("/", (req, res) => {
 app.get('/ytMusic', async (req, res) => {
     var VideoURL = req.query.url;     
     if(VideoURL.indexOf("https://www.youtube.com/watch?v=") != -1){
-        const v_id = VideoURL.split('v=')[1];
+        const v_id = VideoURL.split('v=')[1].substring(0, 11);
         const info = await ytdl.getInfo(req.query.url);
         return res.render("ytMusic", {
             originalUrl : VideoURL,
             url: "https://www.youtube.com/embed/" + v_id,
             videoID : v_id,
-            info: info.formats.sort(),
+            info: info.formats.sort((a, b) => {
+                return a.itag < b.itag;
+            }),
             infoDetail : info.videoDetails,
         });
     }else if(VideoURL.indexOf("https://youtu.be/") != -1){
-        const v_id = VideoURL.split('be/')[1];
+        const v_id = VideoURL.split('be/')[1].substring(0, 11);
         const info = await ytdl.getInfo(req.query.url);
         return res.render("ytMusic", {
             originalUrl : VideoURL,
             url: "https://www.youtube.com/embed/" + v_id,
             videoID : v_id,
-            info: info.formats.sort(),
+            info: info.formats.sort((a, b) => {
+                return a.itag < b.itag;
+            }),
             infoDetail : info.videoDetails,
         });
     }
@@ -51,7 +55,7 @@ app.get('/ytMusic', async (req, res) => {
 app.get('/ytVideo', async (req, res) => {
     var VideoURL = req.query.url;     
     if(VideoURL.indexOf("https://www.youtube.com/watch?v=") != -1){
-        const v_id = VideoURL.split('v=')[1];
+        const v_id = VideoURL.split('v=')[1].substring(0, 11);
         const info = await ytdl.getInfo(req.query.url);
         return res.render("ytVideo", {
             originalUrl : VideoURL,
@@ -63,7 +67,7 @@ app.get('/ytVideo', async (req, res) => {
             infoDetail : info.videoDetails,
         });
     }else if(VideoURL.indexOf("https://youtu.be/") != -1){
-        const v_id = VideoURL.split('be/')[1];
+        const v_id = VideoURL.split('be/')[1].substring(0, 11);
         const info = await ytdl.getInfo(req.query.url);
         return res.render("ytVideo", {
             originalUrl : VideoURL,
